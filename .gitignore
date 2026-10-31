@@ -1,0 +1,5 @@
+.build/
+dist/
+.DS_Store
+Tools/__pycache__/
+Assets/AppIcon.iconset/

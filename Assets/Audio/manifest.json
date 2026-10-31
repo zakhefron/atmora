@@ -1,0 +1,163 @@
+{
+  "description": "Original soundscapes synthesized for Quietude.",
+  "license": "CC0 1.0 Universal (public domain dedication)",
+  "sample_rate": 32000,
+  "channels": 2,
+  "loop_seconds": 40.0,
+  "format": "M4A / AAC 128 kbps",
+  "generator": "Tools/generate_audio.py",
+  "layers": [
+    {
+      "file": "rainy-cabin/rain.m4a",
+      "rms_dbfs": -20.74,
+      "peak_dbfs": -5.5,
+      "seconds": 40.0,
+      "bytes": 661946,
+      "method": "build_rain"
+    },
+    {
+      "file": "rainy-cabin/thunder.m4a",
+      "rms_dbfs": -32.0,
+      "peak_dbfs": -8.08,
+      "seconds": 40.0,
+      "bytes": 647027,
+      "method": "build_thunder"
+    },
+    {
+      "file": "rainy-cabin/fireplace.m4a",
+      "rms_dbfs": -25.0,
+      "peak_dbfs": -10.33,
+      "seconds": 40.0,
+      "bytes": 662647,
+      "method": "build_fireplace"
+    },
+    {
+      "file": "train/rhythm.m4a",
+      "rms_dbfs": -23.0,
+      "peak_dbfs": -8.53,
+      "seconds": 40.0,
+      "bytes": 657506,
+      "method": "build_rail_rhythm"
+    },
+    {
+      "file": "train/carriage.m4a",
+      "rms_dbfs": -28.0,
+      "peak_dbfs": -13.59,
+      "seconds": 40.0,
+      "bytes": 660900,
+      "method": "build_carriage"
+    },
+    {
+      "file": "train/horn.m4a",
+      "rms_dbfs": -33.0,
+      "peak_dbfs": -11.67,
+      "seconds": 40.0,
+      "bytes": 637007,
+      "method": "build_horn"
+    },
+    {
+      "file": "sakura-night/petals.m4a",
+      "rms_dbfs": -29.0,
+      "peak_dbfs": -12.66,
+      "seconds": 40.0,
+      "bytes": 660289,
+      "method": "build_sakura_petals"
+    },
+    {
+      "file": "sakura-night/stream.m4a",
+      "rms_dbfs": -27.0,
+      "peak_dbfs": -12.9,
+      "seconds": 40.0,
+      "bytes": 659535,
+      "method": "build_sakura_stream"
+    },
+    {
+      "file": "sakura-night/chimes.m4a",
+      "rms_dbfs": -32.0,
+      "peak_dbfs": -14.09,
+      "seconds": 40.0,
+      "bytes": 638290,
+      "method": "build_sakura_chimes"
+    },
+    {
+      "file": "cloud-library/window-rain.m4a",
+      "rms_dbfs": -27.0,
+      "peak_dbfs": -13.25,
+      "seconds": 40.0,
+      "bytes": 662701,
+      "method": "build_library_rain"
+    },
+    {
+      "file": "cloud-library/pages.m4a",
+      "rms_dbfs": -34.0,
+      "peak_dbfs": -19.9,
+      "seconds": 40.0,
+      "bytes": 659896,
+      "method": "build_library_pages"
+    },
+    {
+      "file": "cloud-library/hush.m4a",
+      "rms_dbfs": -30.0,
+      "peak_dbfs": -18.25,
+      "seconds": 40.0,
+      "bytes": 639663,
+      "method": "build_library_hush"
+    },
+    {
+      "file": "sunset-drive/road.m4a",
+      "rms_dbfs": -27.0,
+      "peak_dbfs": -15.95,
+      "seconds": 40.0,
+      "bytes": 660941,
+      "method": "build_sunset_road"
+    },
+    {
+      "file": "sunset-drive/song.m4a",
+      "rms_dbfs": -25.0,
+      "peak_dbfs": -10.36,
+      "seconds": 40.0,
+      "bytes": 654993,
+      "method": "build_sunset_song"
+    },
+    {
+      "file": "sunset-drive/air.m4a",
+      "rms_dbfs": -28.0,
+      "peak_dbfs": -13.33,
+      "seconds": 40.0,
+      "bytes": 660329,
+      "method": "build_sunset_air"
+    },
+    {
+      "file": "seaside-records/vinyl.m4a",
+      "rms_dbfs": -34.0,
+      "peak_dbfs": -19.35,
+      "seconds": 40.0,
+      "bytes": 636503,
+      "method": "build_seaside_vinyl"
+    },
+    {
+      "file": "seaside-records/waves.m4a",
+      "rms_dbfs": -25.5,
+      "peak_dbfs": -9.0,
+      "seconds": 40.0,
+      "bytes": 660754,
+      "method": "build_seaside_waves"
+    },
+    {
+      "file": "seaside-records/piano.m4a",
+      "rms_dbfs": -35.53,
+      "peak_dbfs": -14.0,
+      "seconds": 40.0,
+      "bytes": 656809,
+      "method": "build_seaside_piano"
+    },
+    {
+      "file": "ui/click.m4a",
+      "rms_dbfs": -52.29,
+      "peak_dbfs": -6.5,
+      "seconds": 40.0,
+      "bytes": 458839,
+      "method": "build_ui_click"
+    }
+  ]
+}
