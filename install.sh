@@ -68,16 +68,40 @@ printf '  %sambient soundscapes for macOS · builds from source · CC0 audio%s\n
 
 # ---- toolchain ----------------------------------------------------------
 begin "Toolchain"
-if xcodebuild -version >/dev/null 2>&1; then
-    SWIFT=$(swift --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
-    [ -n "$SWIFT" ] || fail "the Swift toolchain is not installed."
-    XCV=$(xcodebuild -version 2>/dev/null | head -1)
-    printf '%s  %s%s\n' "$XCV" "$SWIFT" "$RESET"
-    BUILD_FROM_SOURCE=1
-elif swift --version >/dev/null 2>&1; then
-    SWIFT=$(swift --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
-    [ -n "$SWIFT" ] || fail "the Swift toolchain is not installed."
-    printf 'Swift %s%s\n' "$SWIFT" "$RESET"
+SWIFT_FOUND=0
+SWIFT_VERSION=""
+
+# Check for swift in PATH
+if command -v swift >/dev/null 2>&1 && swift --version >/dev/null 2>&1; then
+    SWIFT_FOUND=1
+    SWIFT_VERSION=$(swift --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
+fi
+
+# Check for swiftc as fallback
+if [ "$SWIFT_FOUND" -eq 0 ] && command -v swiftc >/dev/null 2>&1; then
+    SWIFT_FOUND=1
+    SWIFT_VERSION="Swift (swiftc)"
+fi
+
+# Check common installation paths
+if [ "$SWIFT_FOUND" -eq 0 ]; then
+    for sw_path in /usr/bin/swift /usr/local/bin/swift /opt/homebrew/bin/swift; do
+        if [ -x "$sw_path" ] && "$sw_path" --version >/dev/null 2>&1; then
+            SWIFT_FOUND=1
+            SWIFT_VERSION=$("$sw_path" --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
+            break
+        fi
+    done
+fi
+
+if [ "$SWIFT_FOUND" -eq 1 ]; then
+    [ -n "$SWIFT_VERSION" ] || SWIFT_VERSION="Swift toolchain"
+    if xcodebuild -version >/dev/null 2>&1; then
+        XCV=$(xcodebuild -version 2>/dev/null | head -1)
+        printf '%s  %s%s\n' "$XCV" "$SWIFT_VERSION" "$RESET"
+    else
+        printf 'Swift %s%s\n' "$SWIFT_VERSION" "$RESET"
+    fi
     BUILD_FROM_SOURCE=1
 else
     printf '%sCommand Line Tools only — will download a prebuilt build%s\n' "$DIM" "$RESET"
