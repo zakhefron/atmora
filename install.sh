@@ -6,9 +6,8 @@
 # An app built on the machine it lands on carries no quarantine — so this fetches the
 # sources, builds here, and installs.
 #
-# With only the Command Line Tools (no Xcode), the installer downloads a prebuilt
-# Atmora.zip from GitHub Releases instead — the same app, built once by the
-# maintainer, unpacked here so it carries no quarantine.
+# Xcode (from the App Store) is required to build from source — it includes the Swift
+# compiler. Command Line Tools alone (xcode-select --install) do not include Swift.
 #
 # The sources and the build cache live in ~/Library/Caches/Atmora: the first install
 # compiles once, and later installs rebuild only what changed, in seconds.
@@ -104,7 +103,7 @@ if [ "$SWIFT_FOUND" -eq 1 ]; then
     fi
     BUILD_FROM_SOURCE=1
 else
-    printf '%sCommand Line Tools only — will download a prebuilt build%s\n' "$DIM" "$RESET"
+    printf '%sCommand Line Tools only — Swift not found.%s\n' "$DIM" "$RESET"
     BUILD_FROM_SOURCE=0
 fi
 
@@ -173,11 +172,10 @@ if ! wait "$DLBPID"; then
     kill "$SPINPID" 2>/dev/null
     wait "$SPINPID" 2>/dev/null
     printf '\r\033[K'
-    fail "could not download the prebuilt build (404 = no release published yet).
-  Either install Xcode to build from source:
-    xcode-select --install
-  or ask the maintainer to run ./Scripts/package.sh and upload
-  build/Atmora.zip to GitHub Releases."
+    fail "could not download the prebuilt build (no release published yet).
+  To build from source, install Xcode from the App Store (Command Line Tools
+  alone do not include Swift), then re-run this installer.
+  Or ask the maintainer to publish a prebuilt Atmora.zip to GitHub Releases."
 fi
 kill "$SPINPID" 2>/dev/null
 wait "$SPINPID" 2>/dev/null
