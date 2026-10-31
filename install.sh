@@ -114,18 +114,38 @@ START=$(date +%s)
 NOTE=''
 if [ -d "$CACHE/.git" ]; then
     OLD=$(git -C "$CACHE" rev-parse HEAD 2>/dev/null)
-    if git -C "$CACHE" fetch --quiet --depth 1 origin main 2>/dev/null &&
-       git -C "$CACHE" reset --hard --quiet origin/main 2>/dev/null; then
+    git -C "$CACHE" fetch --depth 1 origin main >/dev/null 2>&1 &
+    FPID=$!
+    spin "$FPID" &
+    SPINPID=$!
+    if wait "$FPID"; then
+        kill "$SPINPID" 2>/dev/null
+        wait "$SPINPID" 2>/dev/null
+        printf '\r\033[K'
+        git -C "$CACHE" reset --hard --quiet origin/main 2>/dev/null
         NEW=$(git -C "$CACHE" rev-parse HEAD)
         [ "$OLD" = "$NEW" ] && NOTE='already current' || NOTE='updated'
     else
+        kill "$SPINPID" 2>/dev/null
+        wait "$SPINPID" 2>/dev/null
+        printf '\r\033[K'
         NOTE='offline - using cached sources'
     fi
 fi
 if [ ! -d "$CACHE/.git" ]; then
-    if git clone --quiet --depth 1 "$URL" "$CACHE" 2>/dev/null; then
+    git clone --depth 1 "$URL" "$CACHE" >/dev/null 2>&1 &
+    CPID=$!
+    spin "$CPID" &
+    SPINPID=$!
+    if wait "$CPID"; then
+        kill "$SPINPID" 2>/dev/null
+        wait "$SPINPID" 2>/dev/null
+        printf '\r\033[K'
         NOTE='fresh clone'
     else
+        kill "$SPINPID" 2>/dev/null
+        wait "$SPINPID" 2>/dev/null
+        printf '\r\033[K\n'
         fail "the clone failed.
   If it says 'Could not resolve host: github.com', this Mac has no DNS servers.
   Fix it once with:  sudo networksetup -setdnsservers Wi-Fi 1.1.1.1 8.8.8.8
