@@ -74,6 +74,11 @@ if xcodebuild -version >/dev/null 2>&1; then
     XCV=$(xcodebuild -version 2>/dev/null | head -1)
     printf '%s  %s%s\n' "$XCV" "$SWIFT" "$RESET"
     BUILD_FROM_SOURCE=1
+elif swift --version >/dev/null 2>&1; then
+    SWIFT=$(swift --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
+    [ -n "$SWIFT" ] || fail "the Swift toolchain is not installed."
+    printf 'Swift %s%s\n' "$SWIFT" "$RESET"
+    BUILD_FROM_SOURCE=1
 else
     printf '%sCommand Line Tools only — will download a prebuilt build%s\n' "$DIM" "$RESET"
     BUILD_FROM_SOURCE=0
