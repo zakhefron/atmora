@@ -67,43 +67,14 @@ printf '  %sambient soundscapes for macOS · builds from source · CC0 audio%s\n
 
 # ---- toolchain ----------------------------------------------------------
 begin "Toolchain"
-SWIFT_FOUND=0
-SWIFT_VERSION=""
-
-# Check for swift in PATH
-if command -v swift >/dev/null 2>&1 && swift --version >/dev/null 2>&1; then
-    SWIFT_FOUND=1
-    SWIFT_VERSION=$(swift --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
-fi
-
-# Check for swiftc as fallback
-if [ "$SWIFT_FOUND" -eq 0 ] && command -v swiftc >/dev/null 2>&1; then
-    SWIFT_FOUND=1
-    SWIFT_VERSION="Swift (swiftc)"
-fi
-
-# Check common installation paths
-if [ "$SWIFT_FOUND" -eq 0 ]; then
-    for sw_path in /usr/bin/swift /usr/local/bin/swift /opt/homebrew/bin/swift; do
-        if [ -x "$sw_path" ] && "$sw_path" --version >/dev/null 2>&1; then
-            SWIFT_FOUND=1
-            SWIFT_VERSION=$("$sw_path" --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
-            break
-        fi
-    done
-fi
-
-if [ "$SWIFT_FOUND" -eq 1 ]; then
-    [ -n "$SWIFT_VERSION" ] || SWIFT_VERSION="Swift toolchain"
-    if xcodebuild -version >/dev/null 2>&1; then
-        XCV=$(xcodebuild -version 2>/dev/null | head -1)
-        printf '%s  %s%s\n' "$XCV" "$SWIFT_VERSION" "$RESET"
-    else
-        printf 'Swift %s%s\n' "$SWIFT_VERSION" "$RESET"
-    fi
+if xcodebuild -version >/dev/null 2>&1; then
+    SWIFT=$(swift --version 2>/dev/null | head -1 | sed 's/^Swift version //;s/^Apple Swift version /Swift /;s/ (swiftlang.*//')
+    [ -n "$SWIFT" ] || fail "the Swift toolchain is not installed."
+    XCV=$(xcodebuild -version 2>/dev/null | head -1)
+    printf '%s  %s%s\n' "$XCV" "$SWIFT" "$RESET"
     BUILD_FROM_SOURCE=1
 else
-    printf '%sCommand Line Tools only — Swift not found.%s\n' "$DIM" "$RESET"
+    printf '%sCommand Line Tools only — will download a prebuilt build%s\n' "$DIM" "$RESET"
     BUILD_FROM_SOURCE=0
 fi
 
@@ -193,9 +164,11 @@ if ! wait "$DLBPID"; then
     wait "$SPINPID" 2>/dev/null
     printf '\r\033[K'
     fail "could not download the prebuilt build (no release published yet).
-  To build from source, install Xcode from the App Store (Command Line Tools
-  alone do not include Swift), then re-run this installer.
-  Or ask the maintainer to publish a prebuilt Atmora.zip to GitHub Releases."
+  To build from source, install Xcode from the App Store.
+  Note: Command Line Tools alone cannot build this app — it uses SwiftUI
+  macros that are only included with full Xcode.
+  If you are on an Intel Mac, the prebuilt Apple Silicon build will not run;
+  you will need Xcode to compile from source."
 fi
 kill "$SPINPID" 2>/dev/null
 wait "$SPINPID" 2>/dev/null
