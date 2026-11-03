@@ -24,7 +24,7 @@ Install in one line — builds once on this Mac (about a minute), installs to `/
 curl -fsSL https://raw.githubusercontent.com/zakhefron/atmora/main/install.sh | sh
 ```
 
-<video src="Docs/demo/atmora-demo-web.mp4" width="640" autoplay loop muted playsinline alt="Atmora demo"></video>
+<img src="Docs/demo/demo.gif" width="640" alt="Atmora demo" />
 
 </div>
 
