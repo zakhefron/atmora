@@ -24,8 +24,6 @@ Install in one line — builds once on this Mac (about a minute), installs to `/
 curl -fsSL https://raw.githubusercontent.com/zakhefron/atmora/main/install.sh | sh
 ```
 
-<img src="Docs/demo/demo.gif" width="640" alt="Atmora demo" />
-
 </div>
 
 ---
