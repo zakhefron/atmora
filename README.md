@@ -12,7 +12,7 @@ A native macOS ambient-soundscape app: living scenes drawn in Canvas, procedural
 ![Layers](https://img.shields.io/badge/layers-18-3f6df6?labelColor=1c1c1e)
 ![Network](https://img.shields.io/badge/network-none-2ea043?labelColor=1c1c1e)
 
-<img src="Docs/screenshots/main-dark.png" width="820" alt="Atmora main window in dark mode" />
+<img src="Docs/screenshots/main-dark.png" width="700" alt="Atmora main window in dark mode" />
 
 **Rainy Cabin · Train Compartment · Sakura Night · Cloud Library · Sunset Drive · Seaside Record**
 
@@ -24,7 +24,7 @@ Install in one line — builds once on this Mac (about a minute), installs to `/
 curl -fsSL https://raw.githubusercontent.com/zakhefron/atmora/main/install.sh | sh
 ```
 
-<img src="Docs/demo/demo.gif" width="640" alt="Atmora demo" />
+<video src="Docs/demo/atmora-demo-web.mp4" width="640" autoplay loop muted playsinline alt="Atmora demo"></video>
 
 </div>
 
